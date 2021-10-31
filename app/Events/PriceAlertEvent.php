@@ -14,7 +14,8 @@ class PriceAlertEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $price_alert;
+    public $alert_price;
+
 
 
     /**
@@ -22,9 +23,9 @@ class PriceAlertEvent implements ShouldBroadcast
      *
      * @return void
      */
-    public function __construct($price_alert)
+    public function __construct($alert_price)
     {
-        $this->price_alert = $price_alert;
+        $this->alert_price = $alert_price;
     }
 
     /**
@@ -34,6 +35,6 @@ class PriceAlertEvent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PresenceChannel('alertChannel');
+        return new Channel('alertChannel');
     }
 }
