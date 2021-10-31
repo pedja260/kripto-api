@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PriceAlertEvent;
 use App\Http\Resources\PriceAlertResource;
 use App\Price_alert;
 use GuzzleHttp\Psr7\Response;
@@ -52,6 +53,9 @@ class PriceAlertController extends Controller
     public function update(Request $request, Price_alert $price_alert)
     {
         $price_alert->update($request->all());
+
+        broadcast(new PriceAlertEvent($price_alert))->toOthers();
+
         return response('Update', \Symfony\Component\HttpFoundation\Response::HTTP_ACCEPTED);
 
 //        return new PriceAlertResource($price_alert);
